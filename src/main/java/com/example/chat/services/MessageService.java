@@ -22,8 +22,8 @@ public class MessageService {
         return chat;
     }
 
-    public Message save(String userName, String message) {
-        Message messages = new Message(UUID.randomUUID(), userName, message, OffsetDateTime.now(), TypeEnum.MESSAGE.type);
+    public Message save(String author, String text) {
+        Message messages = new Message(UUID.randomUUID(), author, text, OffsetDateTime.now(), TypeEnum.MESSAGE.type);
         this.chat.add(messages);
         return messages;
     }

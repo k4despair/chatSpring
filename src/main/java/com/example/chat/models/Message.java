@@ -13,9 +13,9 @@ import java.util.UUID;
 public class Message {
     private UUID id;
     @NotBlank
-    private String userName;
+    private String author;
     @NotBlank
-    private String message;
+    private String text;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "GMT")
     private OffsetDateTime date;
     private String type;
