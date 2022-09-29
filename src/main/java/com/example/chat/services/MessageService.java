@@ -22,9 +22,7 @@ public class MessageService {
         return chat;
     }
 
-    public Message save(String author, String text) {
-        Message messages = new Message(UUID.randomUUID(), author, text, OffsetDateTime.now(), TypeEnum.MESSAGE.type);
-        this.chat.add(messages);
-        return messages;
+    public void save(Message message) {
+        this.chat.add(message);
     }
 }

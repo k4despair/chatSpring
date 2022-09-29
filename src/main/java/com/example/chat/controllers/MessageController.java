@@ -22,7 +22,8 @@ public class MessageController {
 
     @PostMapping("/new")
     public String createMessage(Message message) {
-        messageService.save(message.getAuthor(), message.getText());
+        System.out.println(message.toString());
+        messageService.save(message);
         return "redirect:/";
     }
 }

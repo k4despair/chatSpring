@@ -41,8 +41,9 @@ public class RestMessageController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<String> postChat(@Valid @RequestBody Message message) throws JsonProcessingException {
+        messageService.save(message);
         String resp = JsonMapper.builder().addModules(new JavaTimeModule())
-                .build().writeValueAsString(message);   //messageService.save(message.getAuthor(), message.getText()));
+                .build().writeValueAsString(message); //messageService.save(message.getAuthor(), message.getText()));
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(resp, responseHeaders, HttpStatus.CREATED);
