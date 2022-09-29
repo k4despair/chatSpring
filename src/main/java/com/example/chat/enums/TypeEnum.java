@@ -8,8 +8,4 @@ public enum TypeEnum {
     TypeEnum(String type) {
         this.type = type;
     }
-
-    public String getType() {
-        return type;
-    }
 }
