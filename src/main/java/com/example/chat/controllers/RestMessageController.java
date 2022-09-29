@@ -1,5 +1,6 @@
 package com.example.chat.controllers;
 
+import com.example.chat.models.Message;
 import com.example.chat.services.ErrorsService;
 import com.example.chat.services.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,10 +17,10 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.Valid;
 
 @RestController
 @Validated
@@ -38,15 +39,17 @@ public class RestMessageController {
     }
 
     @PostMapping
-    public ResponseEntity<String> postChat(@RequestParam @NotBlank String author, @RequestParam @NotBlank String text) throws JsonProcessingException {
-        String resp = JsonMapper.builder().addModules(new JavaTimeModule()).build().writeValueAsString(messageService.save(author, text));
+    @ResponseBody
+    public ResponseEntity<String> postChat(@Valid @RequestBody Message message) throws JsonProcessingException {
+        String resp = JsonMapper.builder().addModules(new JavaTimeModule())
+                .build().writeValueAsString(message);   //messageService.save(message.getAuthor(), message.getText()));
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(resp, responseHeaders, HttpStatus.CREATED);
     }
 
     @ResponseBody
-    @ExceptionHandler({MissingServletRequestParameterException.class, HttpMessageNotReadableException.class, TypeMismatchException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, TypeMismatchException.class})
     public ResponseEntity<String> emptyField(Exception exception) throws JsonProcessingException {
         String resp = JsonMapper.builder().addModules(new JavaTimeModule()).build().writeValueAsString(errorsService.empty(exception.getMessage()));
         HttpHeaders responseHeaders = new HttpHeaders();
