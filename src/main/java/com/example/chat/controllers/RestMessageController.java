@@ -21,6 +21,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @Validated
@@ -31,21 +32,15 @@ public class RestMessageController {
     private final ErrorsService errorsService;
 
     @GetMapping
-    public ResponseEntity<String> getChat(Model model) throws JsonProcessingException {
-        String resp = JsonMapper.builder().addModules(new JavaTimeModule()).build().writeValueAsString(messageService.listMessages());
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(resp, responseHeaders, HttpStatus.CREATED);
+    public ResponseEntity<Set<Message>> getChat(Model model) {
+        return new ResponseEntity<>(messageService.listMessages(), HttpStatus.CREATED);
     }
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<String> postChat(@Valid @RequestBody Message message) throws JsonProcessingException {
+    public ResponseEntity<Message> postChat(@Valid @RequestBody Message message) {
         messageService.save(message);
-        String resp = JsonMapper.builder().addModules(new JavaTimeModule()).build().writeValueAsString(message);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(resp, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
     @ResponseBody
