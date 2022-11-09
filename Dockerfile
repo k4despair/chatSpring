@@ -1,4 +1,4 @@
 FROM openjdk:11-jre-slim
-ADD target/chat.jar chat.jar
-#ENTRYPOINT ["java", "-jar", "chat.jar"]
+COPY target/chat.jar chat.jar
+ENTRYPOINT ["java", "-jar", "chat.jar"]
 EXPOSE 8080
