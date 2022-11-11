@@ -2,7 +2,7 @@ package com.example.chat.controllers;
 
 import com.example.chat.models.Message;
 import com.example.chat.services.ErrorsService;
-import com.example.chat.services.MessageServiceImpl;
+import com.example.chat.services.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -25,18 +25,18 @@ import java.util.List;
 @RequestMapping("/api/v1/messages")
 public class RestMessageController {
     @Autowired
-    protected MessageServiceImpl messageServiceImpl;
+    protected MessageService messageService;
     @Autowired
     protected ErrorsService errorsService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Message>> getChat() {
-        return new ResponseEntity<>(messageServiceImpl.getAll(), HttpStatus.CREATED);
+        return new ResponseEntity<>(messageService.getAll(), HttpStatus.CREATED);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Message> postChat(@Valid @RequestBody Message message) {
-        messageServiceImpl.save(message);
+        messageService.save(message);
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
