@@ -1,11 +1,13 @@
 package com.example.chat.enums;
 
 public enum TypeEnum {
-    MESSAGE("Message");
+    MESSAGE(1, "Message");
 
+    final int id;
     final public String type;
 
-    TypeEnum(String type) {
+    TypeEnum(int id, String type) {
+        this.id = id;
         this.type = type;
     }
 }
