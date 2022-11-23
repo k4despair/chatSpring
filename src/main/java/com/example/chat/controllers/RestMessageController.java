@@ -2,6 +2,7 @@ package com.example.chat.controllers;
 
 import com.example.chat.dto.MessageDTO;
 import com.example.chat.dto.mappers.MessageMapper;
+import com.example.chat.handler.TypeEnumException;
 import com.example.chat.models.Message;
 import com.example.chat.services.ErrorsService;
 import com.example.chat.services.MessageService;
@@ -43,7 +44,7 @@ public class RestMessageController {
         return new ResponseEntity<>(MessageMapper.INSTANCE.toDTO(message), HttpStatus.CREATED);
     }
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, TypeMismatchException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, TypeMismatchException.class, TypeEnumException.class})
     public ResponseEntity<String> emptyField(Exception exception) throws JsonProcessingException {
         String resp = JsonMapper.builder().addModules(new JavaTimeModule()).build().writeValueAsString(errorsService.empty(exception.getMessage()));
         HttpHeaders responseHeaders = new HttpHeaders();

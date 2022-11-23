@@ -1,5 +1,7 @@
 package com.example.chat.enums;
 
+import com.example.chat.handler.TypeEnumException;
+
 public enum TypeEnum {
     MESSAGE(0, "Message");
 
@@ -11,25 +13,21 @@ public enum TypeEnum {
         this.type = type;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public static int getIdByType(String type) throws Exception {
+    public static int getIdByType(String type) throws TypeEnumException {
         for (TypeEnum t : values()) {
             if (t.type.equals(type)) {
                 return t.id;
             }
         }
-        throw new Exception("Not found type");
+        throw new TypeEnumException("Cannot found the @type: " + type);
     }
 
-    public static String getTypeById(int id) throws Exception {
+    public static String getTypeById(int id) throws TypeEnumException {
         for (TypeEnum t : values()) {
             if (t.id == id) {
                 return t.type;
             }
         }
-        throw new Exception("Not found id");
+        throw new TypeEnumException("Cannot found id: " + id);
     }
 }
