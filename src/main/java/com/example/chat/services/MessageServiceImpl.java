@@ -20,7 +20,7 @@ public class MessageServiceImpl implements MessageService {
 
     public void save(Message message) {
         message.setDate(Instant.now());
-        message.setType(TypeEnum.MESSAGE.ordinal());
+        message.setType(TypeEnum.MESSAGE.getId());
         messageRepository.save(message);
     }
 }
