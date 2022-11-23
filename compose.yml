@@ -8,3 +8,15 @@ services:
     hostname: localhost
     ports:
       - "8080:8080"
+  db:
+    container_name: pg
+    hostname: localhost
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=messages
+    image: postgres:alpine
+    volumes:
+      - ./messagesTable.sql:/docker-entrypoint-initdb.d/messagesTable.sql
