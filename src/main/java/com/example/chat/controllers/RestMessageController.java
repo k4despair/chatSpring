@@ -1,5 +1,7 @@
 package com.example.chat.controllers;
 
+import com.example.chat.dto.MessageDTO;
+import com.example.chat.dto.mappers.MessageMapper;
 import com.example.chat.models.Message;
 import com.example.chat.services.ErrorsService;
 import com.example.chat.services.MessageService;
@@ -30,14 +32,15 @@ public class RestMessageController {
     protected ErrorsService errorsService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Message>> getChat() {
-        return new ResponseEntity<>(messageService.getAll(), HttpStatus.CREATED);
+    public ResponseEntity<List<MessageDTO>> getChat() {
+        return new ResponseEntity<>(MessageMapper.INSTANCE.toListDTO(messageService.getAll()), HttpStatus.CREATED);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Message> postChat(@Valid @RequestBody Message message) {
+    public ResponseEntity<MessageDTO> postChat(@Valid @RequestBody MessageDTO messageDTO) {
+        Message message = MessageMapper.INSTANCE.fromDTO(messageDTO);
         messageService.save(message);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        return new ResponseEntity<>(MessageMapper.INSTANCE.toDTO(message), HttpStatus.CREATED);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, TypeMismatchException.class})
