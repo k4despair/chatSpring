@@ -1,6 +1,5 @@
 package com.example.chat.services;
 
-import com.example.chat.enums.TypeEnum;
 import com.example.chat.models.Message;
 import com.example.chat.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ public class MessageServiceImpl implements MessageService {
 
     public void save(Message message) {
         message.setDate(Instant.now());
-        message.setType(TypeEnum.MESSAGE.getId());
         messageRepository.save(message);
     }
 }
