@@ -20,3 +20,4 @@ services:
     image: postgres:alpine
     volumes:
       - ./messagesTable.sql:/docker-entrypoint-initdb.d/messagesTable.sql
+      - ./postgres-data:/var/lib/postgresql/data
