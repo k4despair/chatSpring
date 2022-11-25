@@ -39,9 +39,7 @@ public class RestMessageController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageDTO> postChat(@Valid @RequestBody MessageDTO messageDTO) {
-        System.out.println(messageDTO.toString());
         Message message = MessageMapper.INSTANCE.fromDTO(messageDTO);
-        System.out.println(message.toString());
         messageService.save(message);
         return new ResponseEntity<>(MessageMapper.INSTANCE.toDTO(message), HttpStatus.CREATED);
     }
