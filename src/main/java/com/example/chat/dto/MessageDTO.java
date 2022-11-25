@@ -20,10 +20,4 @@ public class MessageDTO {
     private Instant date;
     @NotBlank
     private String type;
-
-    public MessageDTO(String author, String text, String type) {
-        this.author = author;
-        this.text = text;
-        this.type = type;
-    }
 }
