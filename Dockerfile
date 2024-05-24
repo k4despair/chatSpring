@@ -1,5 +1,5 @@
 #
-# Build stage
+# Build the stage
 #
 FROM maven:latest AS build
 COPY src /home/app/src
