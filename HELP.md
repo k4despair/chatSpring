@@ -1,4 +1,4 @@
-# Getting Started
+# Getting Finished
 
 ### Reference Documentation
 For further reference, please consider the following sections:
