@@ -11,9 +11,9 @@
     <form action="/new" method="post">
         <h2>Share your message!</h2>
         <p>Input your super name!</p><br>
-        <input type="text" name="userName"/><br>
+        <input type="text" name="author"/><br>
         <p>Input your message</p><br>
-        <input type="text" name="message"/><br>
+        <input type="text" name="text"/><br>
         <input type="submit" value="Send"/>
         <hr>
     </form>
@@ -21,8 +21,8 @@
     <div class="chat">
         <tr th:each="chat : ${chat}">
             <td th:text="${chat.date}"></td>
-            <td th:text="${chat.userName}"></td>
-            <td th:text="${chat.message}"></td>
+            <td th:text="${chat.author}"></td>
+            <td th:text="${chat.text}"></td>
             <br>
         </tr>
     </div>

@@ -1,22 +1,40 @@
 package com.example.chat.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
 
-@Data
+@Getter
+@Setter
+@Entity(name = "messages")
+@Table
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Message {
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "author")
     @NotBlank
-    private String userName;
+    private String author;
+    @Column(name = "text")
     @NotBlank
-    private String message;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss z", timezone = "GMT")
-    private OffsetDateTime date;
-    private String type;
+    private String text;
+    @Column(name = "date")
+    private Instant date;
+    @NotNull
+    @Column(name = "type")
+    private int type;
+
+    public void setDate(Instant date) {
+        if (date == null) {
+            this.date = Instant.now();
+        } else {
+            this.date = date;
+        }
+    }
 }

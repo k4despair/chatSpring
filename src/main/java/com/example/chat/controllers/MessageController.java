@@ -15,14 +15,14 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/")
-    public String chat(Model model) {
-        model.addAttribute("chat", messageService.listMessages());
+    public String allMessages(Model model) {
+        model.addAttribute("chat", messageService.getAll());
         return "chat";
     }
 
     @PostMapping("/new")
-    public String createMessage(Message message) {
-        messageService.save(message.getUserName(), message.getMessage());
+    public String newMessage(Message message) {
+        messageService.save(message);
         return "redirect:/";
     }
 }
